@@ -86,8 +86,10 @@ metadata:
     cert-manager.io/cluster-issuer: {{ tpl ( toYaml . ) $ }}
     cert-manager.io/private-key-rotation-policy: Always
   {{- end }}
+  {{- if $.Values.global.addTraefikIngressAnnotations }}
     "traefik.ingress.kubernetes.io/router.entrypoints": {{ $values.entrypoint | default "websecure" }}
     "traefik.ingress.kubernetes.io/router.middlewares": {{ $middlewares | quote }}
+  {{- end }}
   {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $ "annotations" $annotations) | trim) }}
     {{- . | nindent 4 }}
   {{- end }}

@@ -11,6 +11,8 @@ global:
   addMetalLBAnnotations: true
   # -- Adds traefik annotations to services
   addTraefikAnnotations: true
+  # -- Adds traefik annotations to ingresses
+  addTraefikIngressAnnotations: true
   # -- Minimum nodePort value
   minNodePort: 9000
   # -- Enable to stop most pods and containers including cnpg
