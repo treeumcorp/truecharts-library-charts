@@ -34,11 +34,11 @@ metadata:
   {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $ "annotations" $annotations) | trim) }}
   annotations:
     {{- . | nindent 4 }}
-  {{- end -}}
+  {{- end }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
-    kind: {{ $values.targetKind | default ( include "tc.v1.common.names.controllerType" . ) }}
+    kind: {{ $values.targetKind | default "Deployment" }}
     name: {{ $values.target | default $targetName }}
   minReplicas: {{ $values.minReplicas | default 1 }}
   maxReplicas: {{ $values.maxReplicas | default 3 }}
@@ -47,12 +47,16 @@ spec:
     - type: Resource
       resource:
         name: cpu
-        targetAverageUtilization: {{ $values.targetCPUUtilizationPercentage }}
+        target:
+          type: Utilization
+          averageUtilization: {{ $values.targetCPUUtilizationPercentage }}
     {{- end -}}
     {{- if $values.targetMemoryUtilizationPercentage }}
     - type: Resource
       resource:
         name: memory
-        targetAverageUtilization: {{ $values.targetMemoryUtilizationPercentage }}
+        target:
+          type: AverageValue
+          averageValue: {{ $values.targetMemoryUtilizationPercentage }}
     {{- end -}}
 {{- end -}}
