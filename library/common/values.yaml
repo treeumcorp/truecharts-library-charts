@@ -18,6 +18,8 @@ global:
   # -- Enable to stop most pods and containers including cnpg
   # does not include stand-alone pods
   stopAll: false
+  # -- Enable always roll your deployment
+  alwaysRollDeployment: true
 
 fallbackDefaults:
   # -- Define a storageClassName that will be used for all PVCs
